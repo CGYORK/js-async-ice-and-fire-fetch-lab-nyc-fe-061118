@@ -1,8 +1,15 @@
 function fetchBooks() {
   fetch('https://anapioficeandfire.com/api/books')
-  .then(function(response) {
-    return response.json();
-  })
+  .then(res => res.json())
+  .then(renderBooks);
+}
+
+function fetchHouses() {
+  //get a list of the houses from the GOT api
+  //list the houses on the page
+  fetch('https://anapioficeandfire.com/api/houses')
+  .then(res => res.json())
+  .then(renderHouses);
 }
 
 function renderBooks(json) {
@@ -14,6 +21,16 @@ function renderBooks(json) {
   })
 }
 
+function renderHouses(json) {
+  const main = document.querySelector('main')
+  json.forEach(house => {
+    const h2 = document.createElement('h2')
+    h2.innerHTML = `<h2>${house.name}</h2>`
+    main.appendChild(h2)
+  })
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   fetchBooks()
+  fetchHouses()
 })
